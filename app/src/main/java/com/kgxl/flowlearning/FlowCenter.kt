@@ -12,7 +12,7 @@ import kotlinx.coroutines.withTimeout
 
 fun main(args: Array<String>) {
     //run method start
-    onStart()
+    flatmapOperator()
 }
 
 fun simpleDelay(): Flow<Int> = flow {
@@ -97,12 +97,15 @@ fun mapOperator() {
  *  flow 1: 1,2,3
  *  flow 2: 6,7,8
  *  out :
+ *      flatMapConcat = 1
  *      1->6
  *      1->7
  *      1->8
+ *      flatMapConcat = 2
  *      2->6
  *      2->7
  *      2->8
+ *      flatMapConcat = 3
  *      3->6
  *      3->7
  *      3->8
@@ -121,16 +124,23 @@ fun flatmapOperator() {
 }
 
 /**
- * 是全部先执行完输入再执行输出
+ * 是全部先执行完输入  再执行输出
  *  例如：
  *  flow 1:1,2,3
  *  flow 2:6,7,8
  *  out :
+ *  flatMapMerge = 1
+ *  flatMapMerge = 2
+ *  flatMapMerge = 3
  *      1->6
+ *      1->7
+ *      1->8
+ *      2->6
  *      2->7
+ *      2->8
+ *      3->6
+ *      3->7
  *      3->8
- *      4->9
- *      5->10
  */
 fun flatmapMergeOperator() {
     runBlocking {
